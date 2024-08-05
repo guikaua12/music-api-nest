@@ -1,4 +1,5 @@
 import { IsEmail, IsNotEmpty, Length, MinLength } from 'class-validator';
+import { User } from '@prisma/client';
 
 export class UserCreateRequest {
   @IsEmail()
@@ -12,6 +13,9 @@ export class UserCreateRequest {
 }
 
 export type FindByEmailOrUsernameRequest = {
-  email: string;
-  username: string;
+  id?: number;
+  email?: string;
+  username?: string;
 };
+
+export type UserWithoutPassword = Omit<User, 'password'>;

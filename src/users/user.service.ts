@@ -24,20 +24,26 @@ export class UserService {
     return user;
   }
 
-  async findByEmailOrUsername({
+  async find({
+    id,
     email,
     username,
   }: FindByEmailOrUsernameRequest): Promise<User | null> {
+    const conditions = [];
+
+    if (id) conditions.push({ id });
+    if (email) conditions.push({ email });
+    if (username) conditions.push({ username });
+
+    if (conditions.length === 0) {
+      throw new Error(
+        'At least one property need to be defined (id, email, username)',
+      );
+    }
+
     return this.prismaService.user.findFirst({
       where: {
-        OR: [
-          {
-            email,
-          },
-          {
-            username,
-          },
-        ],
+        OR: conditions,
       },
     });
   }
@@ -48,7 +54,7 @@ export class UserService {
     name,
     password,
   }: UserCreateRequest): Promise<User> {
-    const userExists = await this.findByEmailOrUsername({
+    const userExists = await this.find({
       email,
       username,
     });

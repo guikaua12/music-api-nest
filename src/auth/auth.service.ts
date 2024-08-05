@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { LoginRequest, LoginResponse } from './auth.dto';
 import { UserService } from '../users/user.service';
 import { InvalidPasswordException } from './auth.exception';
-import { TokenService } from './token.service';
+import { TokenService } from './jwt/token.service';
 import { UserCreateRequest } from '../users/user.dto';
 import { PasswordEncoder } from './password-hasher';
 
