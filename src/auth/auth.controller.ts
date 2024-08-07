@@ -1,19 +1,20 @@
-import { Body, Controller, Post } from '@nestjs/common';
-import { LoginRequest } from './auth.dto';
+import { Controller, Post } from '@nestjs/common';
+import { LoginRequest, LoginRequestSchema } from './auth.dto';
 import { AuthService } from './auth.service';
-import { UserCreateRequest } from '../users/user.dto';
+import { UserCreateRequest, UserCreateRequestSchema } from '../users/user.dto';
+import { ValidBody } from '../common/zod/zod.decorator';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
-  async login(@Body() dto: LoginRequest) {
+  async login(@ValidBody(LoginRequestSchema) dto: LoginRequest) {
     return this.authService.login(dto);
   }
 
   @Post('register')
-  async register(@Body() dto: UserCreateRequest) {
+  async register(@ValidBody(UserCreateRequestSchema) dto: UserCreateRequest) {
     return this.authService.register(dto);
   }
 }

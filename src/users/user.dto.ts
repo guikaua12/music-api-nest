@@ -1,16 +1,25 @@
-import { IsEmail, IsNotEmpty, Length, MinLength } from 'class-validator';
 import { User } from '@prisma/client';
+import { z } from 'zod';
 
-export class UserCreateRequest {
-  @IsEmail()
-  email: string;
-  @Length(3, 16)
-  username: string;
-  @MinLength(3)
-  name: string;
-  @IsNotEmpty()
-  password: string;
-}
+export const UserCreateRequestSchema = z.object({
+  email: z
+    .string({ required_error: 'Email is required' })
+    .email({ message: 'Invalid email format' }),
+  username: z
+    .string({ required_error: 'Username is required' })
+    .min(3, 'Name must have at least 3 characters')
+    .max(16, 'Name must have at most 16 characters'),
+  name: z
+    .string({ required_error: 'Name is required' })
+    .min(3, 'Name must have at least 3 characters')
+    .max(255, 'Name must have at most 3 characters'),
+  password: z
+    .string({ required_error: 'Password is required' })
+    .min(1, 'Password is required')
+    .max(255, 'Password must have at most 255 characters'),
+});
+
+export type UserCreateRequest = z.infer<typeof UserCreateRequestSchema>;
 
 export type FindByEmailOrUsernameRequest = {
   id?: number;

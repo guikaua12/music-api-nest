@@ -19,7 +19,6 @@ export class UserStrategy extends PassportStrategy(Strategy, 'user') {
   }
 
   async validate({ sub }: UserPayload): Promise<UserWithoutPassword> {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...user } = await this.userService.find({ id: sub });
     return user;
   }
