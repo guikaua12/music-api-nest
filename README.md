@@ -7,7 +7,7 @@ Esse projeto foi criado para fins de estudo, vai consistir de uma plataforma de 
 ## Tecnologias usadas no back-end
 - AWS S3
 - Nest.js
-- Prisma (PostgreSQL
+- Prisma (PostgreSQL)
 
 
 ## Front-end
