@@ -37,6 +37,7 @@ model Album {
 model Song {
   id        Int      @id @default(autoincrement())
   name      String
+  filename  String
   createdAt DateTime @default(now())
 
   albumId Int
